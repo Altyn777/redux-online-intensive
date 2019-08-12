@@ -4,22 +4,22 @@ import { Formik, Form, Field } from 'formik';
 
 // Instruments
 import Styles from './styles.m.css';
-import { composer } from '../../bus/forms/shapes';
+import { composer } from '../../bus/forms/shapes'; // изначальное состояние и правила валидации отсюда
 
 export default class Composer extends Component {
     formikForm = createRef();
 
-    _submitForm = (formData, actions) => {
+    _submitForm = (formData, actions) => { // 1 парам - данные о форме, строка с текстом поста
         this._createPost(formData);
         actions.resetForm();
     };
 
-    _createPost = ({ comment }) => {
-        if (!comment) {
+    _createPost = (data) => {
+        if (!data.comment) {
             return null;
         }
 
-        this.props.actions.createPostAsync(comment);
+        this.props.actions.createPostAsync(data);
     };
 
     _submitFormOnEnter = (event) => {

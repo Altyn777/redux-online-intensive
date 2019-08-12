@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { List } from 'immutable';
+// import { List } from 'immutable';
 import FlipMove from 'react-flip-move';
 
 // Instruments
@@ -13,7 +13,7 @@ import { mockedProfile } from '../../instruments/mockedData';
 import { Composer, Catcher, Post } from '../../components';
 
 // Actions
-import { fetchPostsAsync } from "../../bus/posts/actions";
+import { fetchPostsAsync, createPostAsync } from "../../bus/posts/actions";
 
 const mapStateToProps = (state) => { // достает состояние из redux
     //console.log('-> state', state);
@@ -24,7 +24,7 @@ const mapStateToProps = (state) => { // достает состояние из r
 
 const mapDispatchToProps = (dispatch) => { // привяжет нужные actions к пропсам компонента, вызывать dispatch явно больше не нужно, функция сделает это под копотом
     return {
-        actions: bindActionCreators({ fetchPostsAsync }, dispatch), // возвр объект actions, избавл от заглушки и получ настоящий action; bindActionCreators для вложенных объектов
+        actions: bindActionCreators({ fetchPostsAsync, createPostAsync }, dispatch), // возвр объект actions, избавл от заглушки и получ настоящий action; bindActionCreators для вложенных объектов
     };
 };
 
@@ -36,23 +36,23 @@ export default class Posts extends Component {
         //posts:   List(), // лишняя заглушка
         profile: mockedProfile,
 
-        // Actions // лишняя заглушка
-        /*
+        // Actions
         actions: {
             // Users
             fetchUsersAsync: () => {},
 
             // Posts
-            fetchPostsAsync: () => {},
-            removePostAsync: () => {},
-            createPostAsync: () => {},
-            likePostAsync:   () => {},
-            unlikePostAsync: () => {},
+            // fetchPostsAsync: () => {},
+            // removePostAsync: () => {},
+            // createPostAsync: (comment) => {
+            //     console.log('create post', comment);
+            // },
+            // likePostAsync:   () => {},
+            // unlikePostAsync: () => {},
         },
-         */
     };
 
-    componentDidMount () {
+    componentDidMount () { // получ список постов для стены
         const { actions } = this.props;
 
         // console.log('-> this.props', this.props);
@@ -63,7 +63,7 @@ export default class Posts extends Component {
     render () {
         const { actions, posts, profile } = this.props;
 
-        const postsJSX = posts.map((post) => {
+        const postsJSX = posts.map((post) => { // список из компонентов post
             return (
                 <Catcher key = { post.get('id') }>
                     <Post
@@ -79,7 +79,7 @@ export default class Posts extends Component {
             );
         });
 
-        return (
+        return ( // composer - форма для создания поста
             <section className = { Styles.posts }>
                 <Composer actions = { actions } profile = { profile } />
                 <FlipMove>{postsJSX}</FlipMove>

@@ -16,7 +16,7 @@ import { showNextPhoto, showPreviousPhoto, showSelectedPhoto } from '../../bus/g
 @hot(module)
 export default class Gallery extends Component {
     _showNextPhoto = () => {
-        store.dispatch(showNextPhoto());
+        store.dispatch(showNextPhoto()); // с помощью dispatch запускаем action
         this.forceUpdate(); // перерендерись сразу после запуска экшена!
     };
     _showPreviousPhoto = () => {
@@ -32,7 +32,7 @@ export default class Gallery extends Component {
         //console.log('-> state', state);
         const {
             gallery: { photos, selectedPhotoIndex },
-        } = store.getState();
+        } = store.getState(); // getState получает состояние приложения
         const photo = photos.find((_, index) => index === selectedPhotoIndex);
         //const url = photo1;
         const buttonActiveStyle1 = cx({ [Styles.buttonActive]: selectedPhotoIndex === 0 });
