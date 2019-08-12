@@ -8,7 +8,7 @@ import cx from 'classnames';
 import Styles from './styles.m.css';
 
 // Store
-import { store } from '../../init/store'; // у него есть метод getstate
+import { store } from '../../../init/store'; // у него есть метод getstate
 
 // Actions
 import { showNextPhoto, showPreviousPhoto, showSelectedPhoto } from '../../bus/gallery/actions';
