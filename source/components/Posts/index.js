@@ -13,7 +13,7 @@ import { mockedProfile } from '../../instruments/mockedData';
 import { Composer, Catcher, Post } from '../../components';
 
 // Actions
-import { fetchPostsAsync, createPostAsync } from "../../bus/posts/actions";
+import { postsActions } from "../../bus/posts/actions";
 
 const mapStateToProps = (state) => { // достает состояние из redux
     //console.log('-> state', state);
@@ -24,7 +24,7 @@ const mapStateToProps = (state) => { // достает состояние из r
 
 const mapDispatchToProps = (dispatch) => { // привяжет нужные actions к пропсам компонента, вызывать dispatch явно больше не нужно, функция сделает это под копотом
     return {
-        actions: bindActionCreators({ fetchPostsAsync, createPostAsync }, dispatch), // возвр объект actions, избавл от заглушки и получ настоящий action; bindActionCreators для вложенных объектов
+        actions: bindActionCreators({ fetchPostsAsync: postsActions.fetchPostsAsync, createPostAsync: postsActions.createPostAsync }, dispatch), // возвр объект actions, избавл от заглушки и получ настоящий action; bindActionCreators для вложенных объектов
     };
 };
 
