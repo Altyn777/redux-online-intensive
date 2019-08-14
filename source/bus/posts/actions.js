@@ -22,14 +22,8 @@ export const postsActions = {
             type: types.FETCH_POSTS_ASYNC, // триггер
         });
 
-        // console.log('-> getState()', getState());
-
         const response = await api.posts.fetch(); // await обраб ответ от сервера, привязать сырой ответ от сервера
         const result = await response.json(); // преобр в настоящие данные с пом json
-
-        // console.log('-> response', response); // 200 - код успешного овтета
-        // console.log('-> result', result); // message + data (массив с постами)
-
         dispatch(postsActions.fillPosts(result.data));
     },
     createPostAsync: (comment) => {
